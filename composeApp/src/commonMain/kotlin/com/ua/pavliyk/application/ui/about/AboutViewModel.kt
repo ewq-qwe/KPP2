@@ -4,30 +4,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ua.pavliyk.application.organise.data.about.AboutRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.ua.pavliyk.application.organise.data.about.AboutRepository
 
-// 1. ДОДАНО СЛОВО internal
-internal class AboutViewModel(
+class AboutViewModel(
     private val repository: AboutRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<List<Pair<String, String>>>(emptyList())
-    val state: StateFlow<List<Pair<String, String>>> = _state
+    val state: StateFlow<List<Pair<String, String>>> = _state.asStateFlow()
 
     init {
-        fetchData()
+        loadData()
     }
 
-    private fun fetchData() {
+    private fun loadData() {
         viewModelScope.launch {
-            // 2. ЯКЩО getAboutItems() СВІТИТЬСЯ ЧЕРВОНИМ:
-            // Затисніть Ctrl і клікніть на AboutRepository.
-            // Подивіться, як там називається функція, що повертає список характеристик,
-            // і впишіть її назву сюди замість getAboutItems()
-            _state.value = repository.getAbout()
+            _state.value = repository.getAboutItems()
         }
     }
 }

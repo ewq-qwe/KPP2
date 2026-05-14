@@ -1,4 +1,4 @@
-/*package com.ua.pavliyk.application.organise.data.about
+package com.ua.pavliyk.application.organise.data.about
 
 import co.touchlab.kermit.Logger
 import kotlinx.browser.window
@@ -37,4 +37,4 @@ actual class ScreenInfo actual constructor() {
         get() = pageHeight
     actual val density: Int?
         get() = deviceDensity.toInt()
-}*/
+}

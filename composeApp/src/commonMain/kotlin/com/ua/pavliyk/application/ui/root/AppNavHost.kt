@@ -3,10 +3,12 @@ package com.ua.pavliyk.application.ui.root
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.ua.pavliyk.application.ui.about.AboutPage
+import com.ua.pavliyk.application.ui.about.AboutScreen
+import com.ua.pavliyk.application.ui.about.aboutViewModelFactory
 import com.ua.pavliyk.application.ui.reminders.RemindersPage
 
 @Composable
@@ -26,7 +28,11 @@ fun AppNavHost(
         }
 
         composable(Screen.AboutDevice.route) {
-            AboutPage(
+            val viewModel: com.ua.pavliyk.application.ui.about.AboutViewModel =
+                viewModel(factory = aboutViewModelFactory)
+
+            AboutScreen(
+                viewModel = viewModel,
                 onUpButtonClick = { navController.popBackStack() }
             )
         }

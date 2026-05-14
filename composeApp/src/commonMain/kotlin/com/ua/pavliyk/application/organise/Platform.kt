@@ -1,1 +1,0 @@
-/*package com.ua.pavliyk.application.organise*/

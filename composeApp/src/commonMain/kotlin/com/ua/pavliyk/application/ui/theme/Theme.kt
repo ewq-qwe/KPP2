@@ -7,7 +7,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import application.composeapp.generated.resources.Res
-import application.composeapp.generated.resources.Oregano_Italic
+import application.composeapp.generated.resources.oregano_regular
 import org.jetbrains.compose.resources.Font
 
 private val lightScheme = lightColorScheme(
@@ -240,22 +240,11 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> darkScheme
-        else -> lightScheme
-        }
-
-    val audioWideFont = Font(Res.font.Oregano_Italic)
-    val appTypography = remember { getTypography(audioWideFont) }
-
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = appTypography,
+        colorScheme = lightColorScheme(),
+        typography = AppTypography(),
         content = content
     )
 }

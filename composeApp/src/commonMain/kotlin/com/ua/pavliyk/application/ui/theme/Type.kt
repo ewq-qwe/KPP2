@@ -1,29 +1,35 @@
 package com.ua.pavliyk.application.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.font.Font
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
+import org.jetbrains.compose.resources.Font
+import application.composeapp.generated.resources.Res
+import application.composeapp.generated.resources.oregano_regular
 
-private val baseline = Typography()
+@Composable
+fun AppTypography(): Typography {
+    val oreganoFamily = FontFamily(
+        Font(Res.font.oregano_regular)
+    )
 
-fun getTypography(font1: Font, font2: Font? = null): Typography {
-    val bodyFontFamily = FontFamily(font1)
-    val displayFontFamily = FontFamily(font2 ?: font1)
+    val baseline = Typography()
+
     return Typography(
-        displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
-        displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
-        displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
-        headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
-        headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily),
-        headlineSmall = baseline.headlineSmall.copy(fontFamily = displayFontFamily),
-        titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
-        titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
-        titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),
-        bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
-        bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily),
-        bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
-        labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-        labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
-        labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
+        displayLarge = baseline.displayLarge.copy(fontFamily = oreganoFamily),
+        displayMedium = baseline.displayMedium.copy(fontFamily = oreganoFamily),
+        displaySmall = baseline.displaySmall.copy(fontFamily = oreganoFamily),
+        headlineLarge = baseline.headlineLarge.copy(fontFamily = oreganoFamily),
+        headlineMedium = baseline.headlineMedium.copy(fontFamily = oreganoFamily),
+        headlineSmall = baseline.headlineSmall.copy(fontFamily = oreganoFamily),
+        titleLarge = baseline.titleLarge.copy(fontFamily = oreganoFamily),
+        titleMedium = baseline.titleMedium.copy(fontFamily = oreganoFamily),
+        titleSmall = baseline.titleSmall.copy(fontFamily = oreganoFamily),
+        bodyLarge = baseline.bodyLarge.copy(fontFamily = oreganoFamily),
+        bodyMedium = baseline.bodyMedium.copy(fontFamily = oreganoFamily),
+        bodySmall = baseline.bodySmall.copy(fontFamily = oreganoFamily),
+        labelLarge = baseline.labelLarge.copy(fontFamily = oreganoFamily),
+        labelMedium = baseline.labelMedium.copy(fontFamily = oreganoFamily),
+        labelSmall = baseline.labelSmall.copy(fontFamily = oreganoFamily),
     )
 }
