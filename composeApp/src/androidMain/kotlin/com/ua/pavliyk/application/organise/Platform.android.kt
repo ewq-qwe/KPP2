@@ -7,6 +7,7 @@ import com.ua.pavliyk.application.organise.data.about.ScreenInfo
 import com.ua.pavliyk.application.organise.data.about.deviceInfo
 import kotlin.math.round
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class Platform actual constructor() {
     actual val osName: String
         get() = "Android"
@@ -24,6 +25,7 @@ actual class Platform actual constructor() {
     }
 }
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class ScreenInfo actual constructor() {
 
     private val metrics = Resources.getSystem().displayMetrics

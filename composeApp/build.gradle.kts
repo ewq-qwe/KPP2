@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.koin.compiler)
 }
 
 kotlin {
@@ -36,6 +37,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.kermit)
             implementation(libs.datetime)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -53,11 +55,15 @@ kotlin {
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.navigation.compose)
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.2")
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kermit)
             implementation(libs.datetime)
+            implementation(libs.koin.test)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

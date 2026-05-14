@@ -1,5 +1,6 @@
 package com.ua.pavliyk.application.ui.about
 
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
@@ -10,8 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AboutViewModel(
-    private val repository: AboutRepository
+ internal class AboutViewModel(
+    private val aboutRepository: AboutRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<List<Pair<String, String>>>(emptyList())
@@ -23,13 +24,7 @@ class AboutViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            _state.value = repository.getAboutItems()
+            _state.value = aboutRepository.getAbout()
         }
-    }
-}
-
-val aboutViewModelFactory = viewModelFactory {
-    initializer {
-        AboutViewModel(AboutRepository())
     }
 }
