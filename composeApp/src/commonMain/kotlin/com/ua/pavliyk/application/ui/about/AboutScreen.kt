@@ -69,19 +69,14 @@ private fun AboutContent(viewModel: AboutViewModel) {
             RowView(title = row.first, subtitle = row.second)
         }
         item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth().padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Visited ${state.visitedCount} times."
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "Last time visited at ${state.visitedDate}."
-                )
-            }
+            Text(
+                text = "Visited ${state.visitedCount} times.",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "Last time visited at ${state.visitedDate}.",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 

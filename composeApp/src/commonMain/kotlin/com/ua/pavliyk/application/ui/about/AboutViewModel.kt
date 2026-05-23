@@ -19,45 +19,44 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
- internal class AboutViewModel(
+@Stable
+internal class AboutViewModel(
     private val aboutRepository: AboutRepository,
 ) : ViewModel() {
 
+    private val format: DateTimeFormat<LocalDateTime> = LocalDateTime.Format {
+        day()
+        char('.')
+        monthNumber()
+        char('.')
+        year()
+        char(' ')
+        hour()
+        char(':')
+        minute()
+    }
 
-     private val format: DateTimeFormat<LocalDateTime> = LocalDateTime.Format {
-         day()
-         char('.')
-         monthNumber()
-         char('.')
-         year()
-         char(' ')
-         hour()
-         char(':')
-         minute()
-     }
+    val countState: StateFlow<Int> = aboutRepository.visitedCountObservable()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0
+        )
 
-     val countState: StateFlow<Int> = aboutRepository.visitedCountObservable()
-         .stateIn(
-             scope = viewModelScope,
-             started = SharingStarted.WhileSubscribed(5000),
-             initialValue = 0
-         )
-
-     private val _state = MutableStateFlow(AboutState())
-     val state = _state.asStateFlow()
+    private val _state = MutableStateFlow(AboutState())
+    val state = _state.asStateFlow()
 
     init {
         Logger.w("init")
         aboutRepository.increaseVisitCount()
         aboutRepository.updateVisitedDate()
-        loadData()
+        fetchData()
     }
 
-    private fun loadData() {
+    fun fetchData() {
         viewModelScope.launch {
             val platformInfo = aboutRepository.getAbout()
             val visitedCount = aboutRepository.visitedCount()
-
             val lastVisitedDate = aboutRepository.visitedDate()?.format(format) ?: "-----"
             _state.update { current ->
                 current.copy(
