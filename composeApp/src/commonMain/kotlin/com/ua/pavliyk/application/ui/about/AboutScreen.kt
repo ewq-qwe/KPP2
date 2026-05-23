@@ -1,8 +1,10 @@
 package com.ua.pavliyk.application.ui.about
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.koin.compose.viewmodel.koinViewModel
+import androidx.compose.ui.Alignment
 
 @Composable
 internal fun AboutScreen(
@@ -62,10 +65,26 @@ private fun AboutContent(viewModel: AboutViewModel) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
-        items(state) { row ->
+        items(state.platformInfo) { row ->
             RowView(title = row.first, subtitle = row.second)
         }
+        item {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth().padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Visited ${state.visitedCount} times."
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Last time visited at ${state.visitedDate}."
+                )
+            }
+        }
     }
+
 }
 
 @Composable

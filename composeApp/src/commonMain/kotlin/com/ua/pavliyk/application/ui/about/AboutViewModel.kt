@@ -9,22 +9,63 @@ import com.ua.pavliyk.application.organise.data.about.AboutRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.format
+import kotlinx.datetime.format.DateTimeFormat
+import kotlinx.datetime.format.char
 import kotlinx.coroutines.launch
+import co.touchlab.kermit.Logger
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
  internal class AboutViewModel(
     private val aboutRepository: AboutRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<List<Pair<String, String>>>(emptyList())
-    val state: StateFlow<List<Pair<String, String>>> = _state.asStateFlow()
+
+     private val format: DateTimeFormat<LocalDateTime> = LocalDateTime.Format {
+         day()
+         char('.')
+         monthNumber()
+         char('.')
+         year()
+         char(' ')
+         hour()
+         char(':')
+         minute()
+     }
+
+     val countState: StateFlow<Int> = aboutRepository.visitedCountObservable()
+         .stateIn(
+             scope = viewModelScope,
+             started = SharingStarted.WhileSubscribed(5000),
+             initialValue = 0
+         )
+
+     private val _state = MutableStateFlow(AboutState())
+     val state = _state.asStateFlow()
 
     init {
+        Logger.w("init")
+        aboutRepository.increaseVisitCount()
+        aboutRepository.updateVisitedDate()
         loadData()
     }
 
     private fun loadData() {
         viewModelScope.launch {
-            _state.value = aboutRepository.getAbout()
+            val platformInfo = aboutRepository.getAbout()
+            val visitedCount = aboutRepository.visitedCount()
+
+            val lastVisitedDate = aboutRepository.visitedDate()?.format(format) ?: "-----"
+            _state.update { current ->
+                current.copy(
+                    platformInfo = platformInfo,
+                    visitedCount = visitedCount,
+                    visitedDate = lastVisitedDate
+                )
+            }
         }
     }
 }

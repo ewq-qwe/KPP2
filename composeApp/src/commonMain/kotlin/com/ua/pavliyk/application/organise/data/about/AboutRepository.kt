@@ -1,10 +1,18 @@
 package com.ua.pavliyk.application.organise.data.about
 
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.coroutines.flow.Flow
+import com.ua.pavliyk.application.organise.data.common.preferences.Preferences
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal class AboutRepository(
-    private val platform: Platform
+    private val platform: Platform,
+    private val preferences: Preferences
 ) {
     fun getAbout(): MutableList<Pair<String, String>> {
 
@@ -23,5 +31,27 @@ internal class AboutRepository(
         }
         items.add(Pair("Display", displayInfo))
         return items
+    }
+
+    fun increaseVisitCount() {
+        preferences.aboutVisitedCount++
+    }
+
+    fun visitedCount(): Int {
+        return preferences.aboutVisitedCount
+    }
+
+    fun visitedCountObservable(): Flow<Int> {
+        return preferences.observableAboutVisitedCount
+    }
+
+    fun updateVisitedDate() {
+        val now: Instant = Clock.System.now()
+        val localNow: LocalDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+        preferences.aboutVisitedDate = localNow
+    }
+
+    fun visitedDate(): LocalDateTime? {
+        return preferences.aboutVisitedDate
     }
 }

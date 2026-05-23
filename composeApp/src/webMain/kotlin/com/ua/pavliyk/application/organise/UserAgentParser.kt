@@ -27,15 +27,15 @@ fun parseBrowserVersion(ua: String): String {
 
 fun parseOsVersion(ua: String): String {
     val patterns = listOf(
-        Regex("Windows NT ([\\d.]+)"),          // Windows
-        Regex("Android ([\\d.]+)"),             // Android
-        Regex("OS ([\\d_]+) like Mac OS X"),    // iOS  (e.g. OS 17_0)
-        Regex("Mac OS X ([\\d_.]+)"),           // macOS
-        Regex("CrOS [\\w]+ ([\\d.]+)")          // ChromeOS
+        Regex("Windows NT ([\\d.]+)"),
+        Regex("Android ([\\d.]+)"),
+        Regex("OS ([\\d_]+) like Mac OS X"),
+        Regex("Mac OS X ([\\d_.]+)"),
+        Regex("CrOS [\\w]+ ([\\d.]+)")
     )
     return patterns.firstNotNullOfOrNull { regex ->
         regex.find(ua)?.groupValues?.get(1)
-            ?.replace('_', '.')                 // iOS uses underscores
+            ?.replace('_', '.')
     } ?: "Unknown"
 }
 
